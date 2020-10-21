@@ -6,3 +6,10 @@ Scenario: Login as a sales manger
   When user logs in
   Then user should see dashboard page
 
+  @parametrized_test #@BUG_VYT3242
+Scenario: Parametrized login
+  Given user is on the login page
+  When user logs in as a "store manager"
+  Then user should see dashboard page
+
+    #"driver" - is a parameter. "" allows to do test parametrization which helps to re-use test steps
