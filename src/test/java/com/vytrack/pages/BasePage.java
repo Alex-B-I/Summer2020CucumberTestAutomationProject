@@ -1,4 +1,5 @@
 package com.vytrack.pages;
+import com.vytrack.utils.BrowserUtils;
 import com.vytrack.utils.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -10,6 +11,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public abstract class BasePage {
     @FindBy(className = "oro-subtitle")
     protected WebElement pageSubTitle;
+
+    @FindBy(xpath = "(//button[contains(text(),'Save and Close')])[1]")
+    protected WebElement saveAndCloseBtn;
+
+    @FindBy(css = "[class='loader-mask']")
+    protected WebElement loaderMask;
+
     public BasePage() {
         PageFactory.initElements(Driver.getDriver(), this);
     }
@@ -27,11 +35,30 @@ public abstract class BasePage {
         String tabXpath = "//*[contains(text(),'" + tab + "') and @class='title title-level-1']";
         String moduleXpath = "//*[contains(text(),'"+module+"') and @class='title title-level-2']";
 
+        //BrowserUtils.wait(4);
+        //wait until loader mask disappears
+        //Option1
+        wait.until(ExpectedConditions.invisibilityOf(loaderMask));
+        //Option2
+        //wait.until(ExpectedConditions.invisibilityOfAllElements(loaderMask));
+
+        //BrowserUtils.wait(3);
         //wait for presence and ability co click on element
         WebElement tabElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(tabXpath)));
         wait.until(ExpectedConditions.elementToBeClickable(tabElement)).click();
 
         WebElement moduleElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(moduleXpath)));
         wait.until(ExpectedConditions.elementToBeClickable(moduleElement)).click();
+
+        //wait until loader mask disappears
+        //Option1
+        wait.until(ExpectedConditions.invisibilityOf(loaderMask));
+        //Option2
+        //wait.until(ExpectedConditions.invisibilityOfAllElements(loaderMask));
+        //BrowserUtils.wait(3);
+    }
+
+    public void clickSaveAndClose(){
+        BrowserUtils.clickOnElement(saveAndCloseBtn);
     }
 }
