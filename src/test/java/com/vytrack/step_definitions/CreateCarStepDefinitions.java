@@ -40,13 +40,26 @@ public class CreateCarStepDefinitions {
      *
      * @Then("user verifies following list:")
      * public void user_verifies_following_list(List<String> dataTable){}
+     *
+     * DataTable - cucumber data structure/data type. We convert it into Map, List or List<Map<>>
      */
     @When("user adds new vehicle information")
     public void user_adds_new_vehicle_information(Map<String, String> dataTable) {
         //to get all keys and values one by one
-        dataTable.forEach((k, v) -> System.out.println("Key: " + k + ", value: " + v));
+
+        //option 1
+        dataTable.forEach((key, value) -> System.out.println("Key: " + key + ", value: " + value));
+
+        //option2 (old way)
+        /*
+        for (Map.Entry<String,String> entry: dataTable.entrySet()){
+            System.out.println("Key: "+entry.getKey()+", value: "+entry.getValue());
+        }
+
+         */
 
         System.out.println("License plate: " + dataTable.get("License Plate"));
         System.out.println("Model year: " + dataTable.get("Model Year"));
+        createCarPage.enterLicensePlate(dataTable.get("License Plate"));
     }
 }
