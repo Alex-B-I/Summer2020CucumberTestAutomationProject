@@ -12,15 +12,27 @@ public class LoginPage extends BasePage {
     @FindBy(id = "prependedInput")
     private WebElement username;
 
-    @FindBy(id= "prependedInput2")
+    @FindBy(id = "prependedInput2")
     private WebElement password;
 
-    public void login(String usernameValue, String passwordValue){
-        username.sendKeys(usernameValue);
-        password.sendKeys(passwordValue);
+    @FindBy(css = "[class='alert alert-error']")
+    private WebElement warningMessage;
+
+    public String getWarningMessageText() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return warningMessage.getText().trim();
     }
 
-    public void login(){
+    public void login(String usernameValue, String passwordValue) {
+        username.sendKeys(usernameValue);
+        password.sendKeys(passwordValue, Keys.ENTER);
+    }
+
+    public void login() {
         String usernameValue = ConfigurationReader.getProperty("storemanager.username");
         String passwordValue = ConfigurationReader.getProperty("password");
 
@@ -43,6 +55,4 @@ public class LoginPage extends BasePage {
         username.sendKeys(usernameValue);
         password.sendKeys(passwordValue, Keys.ENTER);
     }
-
-
 }
