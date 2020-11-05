@@ -57,6 +57,7 @@ Feature: As user I want to be able to login under different roles
   Scenario Outline: Invalid login with <username> and <password>
     When user logs in with "<username>" username and "<password>" password
     Then user verifies that "<message>" message is displayed
+
     Examples: data set
       | username | password | message                        |
       | wrong    | bad      | Invalid user name or password. |
