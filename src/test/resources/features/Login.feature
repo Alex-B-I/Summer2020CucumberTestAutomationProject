@@ -21,17 +21,20 @@ Feature: As user I want to be able to login under different roles
     Then user should see dashboard page
 
   @s_o
-    Scenario Outline: Parametrized login
+  Scenario Outline: Parametrized login as <role>
     When user logs in as a "<role>"
     Then user should see dashboard page
 
     Examples:
-    |role          |
-    |store manager |
-    |sales manager |
+      | role          |
+      | sales manager |
+      | store manager |
+      | driver        |
 
-
-
+#    role - variable. You can name parameters as you want.
+#   1st row always reserved for parameters
+# auto-formatting on mac:     command + option + L
+# auto-formatting on windows: control + alt + L
 #"driver" - is a parameter. "" allows to do test parametrization which helps to re-use test steps
 
   @negative_login
