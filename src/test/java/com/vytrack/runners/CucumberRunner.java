@@ -8,12 +8,13 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         plugin = {
-                "rerun:target/rerun.txt"
+                "rerun:target/rerun.txt",
+                "json:target/cucumber.json"
         },
         features = "src/test/resources/features",
         glue = "com/vytrack/step_definitions",
         dryRun = false,
-        tags = "@add_car_scenario_outline",    //"@s_o and @login"  // "@s_o or @login"
+        tags = "@negative_login",    //"@s_o and @login"  // "@s_o or @login"
         publish = true
 )
 public class CucumberRunner {
