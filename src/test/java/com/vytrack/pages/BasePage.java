@@ -42,7 +42,7 @@ public abstract class BasePage {
         //Option2
         //wait.until(ExpectedConditions.invisibilityOfAllElements(loaderMask));
 
-        //BrowserUtils.wait(3);
+        BrowserUtils.wait(3);
         //wait for presence and ability co click on element
         WebElement tabElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(tabXpath)));
         wait.until(ExpectedConditions.elementToBeClickable(tabElement)).click();
