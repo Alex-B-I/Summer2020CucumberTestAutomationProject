@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features",
         glue = "com/vytrack/step_definitions",
         dryRun = false,
-        tags = "@smoke",    //"@s_o and @login"  // "@s_o or @login"
+        tags = "@negative_login",    //"@s_o and @login"  // "@s_o or @login"
         publish = true
 )
 public class CucumberRunner {
