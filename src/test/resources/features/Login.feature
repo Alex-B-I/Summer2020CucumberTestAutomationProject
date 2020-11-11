@@ -65,3 +65,4 @@ Feature: As user I want to be able to login under different roles
       | wrong213 | bad      | Invalid user name or password. |
       | wrong32  | bad      | Invalid user name or password. |
       | wrong12  | bad      | Invalid user name or password. |
+
