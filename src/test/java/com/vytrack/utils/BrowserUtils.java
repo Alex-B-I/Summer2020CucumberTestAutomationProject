@@ -30,6 +30,7 @@ public class BrowserUtils {
         element.clear();
         element.sendKeys(text);
         wait.until(ExpectedConditions.attributeToBe(element, "value", text));
+       // BrowserUtils.wait(1);
         System.out.println("Entering text: " + text);
     }
 
