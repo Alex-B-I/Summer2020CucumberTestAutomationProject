@@ -33,10 +33,12 @@ public class CreateCarPage extends BasePage {
         licencePlateInputBox.sendKeys(licencePlate);
 
        */
+        BrowserUtils.wait(1);
         BrowserUtils.enterText(licencePlateInputBox,licencePlate);
     }
 
     public void enterModelYear(String modelYear){
+        BrowserUtils.wait(1);
         BrowserUtils.enterText(modelYearInputBox,modelYear);
     }
 
