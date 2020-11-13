@@ -30,19 +30,22 @@
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
 
-                        <parallel>methods</parallel>
-                        <threadCount>4</threadCount>
+                       <!-- <parallel>methods</parallel> -->
+                        <parallel>classes</parallel>
+
+                        <threadCount>2</threadCount>
+                        <forkCount>2C</forkCount>
                         <perCoreThreadCount>false</perCoreThreadCount>
 
                     <includes>
-                        <include>**/CucumberRunner.java</include>
+                        <include>**/CucumberRunner*.java</include>
                     </includes>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>net.masterthought</groupId>
                 <artifactId>maven-cucumber-reporting</artifactId>
-                <version>5.0.0</version>
+                <version>5.4.0</version>
                 <executions>
                     <execution>
                         <id>execution</id>

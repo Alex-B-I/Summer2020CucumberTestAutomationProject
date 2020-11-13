@@ -9,18 +9,17 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         plugin = {
                 "rerun:target/rerun.txt",
-                "json:target/cucumber.json",
-                "timeline:target/timeline-report"
+                "json:target/cucumber2.json"
         },
         features = {
-                "src/test/resources/features/fleet"
+                "src/test/resources/features/activities"
         },
         glue = "com/vytrack/step_definitions",
         dryRun = false,
         tags = "",    //"@s_o and @login"  // "@s_o or @login"
         publish = true
 )
-public class CucumberRunner {
+public class CucumberRunner2 {
     //tags = "@s_o and @with_two_columns",
     // scenario must have BOTH tags
     //java logic if(@s_o && @with_two_columns)
