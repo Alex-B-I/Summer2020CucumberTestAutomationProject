@@ -1,5 +1,7 @@
 package com.vytrack.utils;
 
+import org.junit.Assert;
+
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -186,6 +188,220 @@ public class BrowserUtils {
         return target;
     }
 
+    /**
+     * Verifies whether the element matching the provided locator is displayed on page
+     *
+     * @param by
+     * @throws AssertionError if the element matching the provided locator is not found or not displayed
+     */
+    public static void verifyElementDisplayed(By by) {
+        try {
+            Assert.assertTrue("Element not visible: " + by, Driver.getDriver().findElement(by).isDisplayed());
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+            Assert.fail("Element not found: " + by);
+
+        }
+    }
+
+    /**
+     * Verifies whether the element matching the provided locator is NOT displayed on page
+     *
+     * @param by
+     * @throws AssertionError the element matching the provided locator is displayed
+     */
+    public static void verifyElementNotDisplayed(By by) {
+        try {
+            Assert.assertFalse("Element should not be visible: " + by, Driver.getDriver().findElement(by).isDisplayed());
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+
+    /**
+     * Verifies whether the element is displayed on page
+     *
+     * @param element
+     * @throws AssertionError if the element is not found or not displayed
+     */
+    public static void verifyElementDisplayed(WebElement element) {
+        try {
+            Assert.assertTrue("Element not visible: " + element, element.isDisplayed());
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+            Assert.fail("Element not found: " + element);
+
+        }
+    }
+
+
+    /**
+     * Waits for element to be not stale
+     *
+     * @param element
+     */
+    public static void waitForStaleElement(WebElement element) {
+        int y = 0;
+        while (y <= 15) {
+            if (y == 1)
+                try {
+                    element.isDisplayed();
+                    break;
+                } catch (StaleElementReferenceException st) {
+                    y++;
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } catch (WebDriverException we) {
+                    y++;
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+        }
+    }
+
+
+     /**
+     * Scrolls down to an element using JavaScript
+     *
+     * @param element
+     */
+    public static void scrollToElement(WebElement element) {
+        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
+    }
+
+    /**
+     * Performs double click action on an element
+     *
+     * @param element
+     */
+    public static void doubleClick(WebElement element) {
+        new Actions(Driver.getDriver()).doubleClick(element).build().perform();
+    }
+
+    /**
+     * Changes the HTML attribute of a Web Element to the given value using JavaScript
+     *
+     * @param element
+     * @param attributeName
+     * @param attributeValue
+     */
+    public static void setAttribute(WebElement element, String attributeName, String attributeValue) {
+        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);", element, attributeName, attributeValue);
+    }
+
+    /**
+     * Highlighs an element by changing its background and border color
+     * @param element
+     */
+    public static void highlight(WebElement element) {
+        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
+        wait(1);
+        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].removeAttribute('style', 'background: yellow; border: 2px solid red;');", element);
+    }
+
+    /**
+     * Checks or unchecks given checkbox
+     *
+     * @param element
+     * @param check
+     */
+    public static void selectCheckBox(WebElement element, boolean check) {
+        if (check) {
+            if (!element.isSelected()) {
+                element.click();
+            }
+        } else {
+            if (element.isSelected()) {
+                element.click();
+            }
+        }
+    }
+
+    /**
+     * attempts to click on provided element until given time runs out
+     *
+     * @param element
+     * @param timeout
+     */
+    public static void clickWithTimeOut(WebElement element, int timeout) {
+        for (int i = 0; i < timeout; i++) {
+            try {
+                element.click();
+                return;
+            } catch (WebDriverException e) {
+                wait(1);
+            }
+        }
+    }
+
+    /**
+     * executes the given JavaScript command on given web element
+     *
+     * @param element
+     */
+    public static void executeJScommand(WebElement element, String command) {
+        JavascriptExecutor jse = (JavascriptExecutor) Driver.getDriver();
+        jse.executeScript(command, element);
+
+    }
+
+    /**
+     * executes the given JavaScript command on given web element
+     *
+     * @param command
+     */
+    public static void executeJScommand(String command) {
+        JavascriptExecutor jse = (JavascriptExecutor) Driver.getDriver();
+        jse.executeScript(command);
+
+    }
+
+
+    /**
+     * This method will recover in case of exception after unsuccessful the click,
+     * and will try to click on element again.
+     *
+     * @param by
+     * @param attempts
+     */
+    public static void clickWithWait(By by, int attempts) {
+        int counter = 0;
+        //click on element as many as you specified in attempts parameter
+        while (counter < attempts) {
+            try {
+                //selenium must look for element again
+                clickWithJS(Driver.getDriver().findElement(by));
+                //if click is successful - then break
+                break;
+            } catch (WebDriverException e) {
+                //if click failed
+                //print exception
+                //print attempt
+                e.printStackTrace();
+                ++counter;
+                //wait for 1 second, and try to click again
+                wait(1);
+            }
+        }
+    }
+
+    /**
+     *  checks that an element is present on the DOM of a page. This does not
+     *    * necessarily mean that the element is visible.
+     * @param by
+     * @param time
+     */
+    public static void waitForPresenceOfElement(By by, long time) {
+        new WebDriverWait(Driver.getDriver(), time).until(ExpectedConditions.presenceOfElementLocated(by));
+    }
 
 
 

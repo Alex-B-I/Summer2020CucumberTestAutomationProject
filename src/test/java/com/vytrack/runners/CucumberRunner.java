@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
         },
         glue = "com/vytrack/step_definitions",
         dryRun = false,
-        tags = "",    //"@s_o and @login"  // "@s_o or @login"
+        tags = "",    //"@s_o and @login"  // "@s_o or @login" //  "@s_o not @login"
         publish = true
 )
 public class CucumberRunner {

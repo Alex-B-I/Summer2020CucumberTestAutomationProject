@@ -15,6 +15,7 @@ public class CommonStepDefinitions {
     public void user_navigates_to_and(String string, String string2) {
       //  Driver.getDriver().manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         basePage.navigateTo(string, string2);
+
     }
 
     @When("user clicks on save and close button")
